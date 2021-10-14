@@ -1,0 +1,130 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Parse_JSON": {
+                "inputs": {
+                    "content": "@triggerBody()",
+                    "schema": {
+                        "properties": {
+                            "text": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "runAfter": {},
+                "type": "ParseJson"
+            },
+            "Post_a_tweet": {
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['twitter']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/posttweet",
+                    "queries": {
+                        "tweetText": "@body('Parse_JSON')?['text']"
+                    }
+                },
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            },
+            "Post_message_in_a_chat_or_channel": {
+                "inputs": {
+                    "body": {
+                        "messageBody": "<p>@{body('Parse_JSON')?['text']}</p>",
+                        "recipient": {
+                            "channelId": "19:eccf23237f464e8cb273b9189a7c205f@thread.skype",
+                            "groupId": "f96e37b1-0fd1-49b1-9000-24246d785195"
+                        }
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['teams']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Channel')}"
+                },
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            },
+            "Post_to_page": {
+                "inputs": {
+                    "body": {
+                        "message": "@body('Parse_JSON')?['text']"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['facebook_1']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/@{encodeURIComponent(parameters('FacebookPage'))}/feed"
+                },
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            },
+            "FacebookPage": {
+                "defaultValue": "PlasticPlug",
+                "type": "String"
+            }
+        },
+        "triggers": {
+            "manual": {
+                "inputs": {
+                    "schema": {
+                        "text": ""
+                    }
+                },
+                "kind": "Http",
+                "type": "Request"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "facebook_1": {
+                    "connectionId": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/resourceGroups/hackathon/providers/Microsoft.Web/connections/facebook-2",
+                    "connectionName": "facebook-2",
+                    "id": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/resourceGroups/hackathon/providers/Microsoft.Web/customApis/facebook"
+                },
+                "teams": {
+                    "connectionId": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/resourceGroups/hackathon/providers/Microsoft.Web/connections/teams",
+                    "connectionName": "teams",
+                    "id": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/providers/Microsoft.Web/locations/westeurope/managedApis/teams"
+                },
+                "twitter": {
+                    "connectionId": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/resourceGroups/hackathon/providers/Microsoft.Web/connections/twitter-1",
+                    "connectionName": "twitter-1",
+                    "id": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/providers/Microsoft.Web/locations/westeurope/managedApis/twitter"
+                }
+            }
+        }
+    }
+}
