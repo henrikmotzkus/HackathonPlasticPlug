@@ -21,3 +21,11 @@ Source: https://github.com/microsoft/PowerPlatformConnectors/tree/master/custom-
 
 This is a settings file for the Custom connector.
 Source: https://github.com/microsoft/PowerPlatformConnectors/tree/master/custom-connectors/Facebook
+
+
+## Status
+This is aplha status
+
+## Workflow in detail
+
+![Screenshot](screenshot1.jpg)
