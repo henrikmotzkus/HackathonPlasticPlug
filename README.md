@@ -1,6 +1,7 @@
-# HackathonPlasticPlug
-In this worklflow I use the built in Twitter and Teams function to post a text. For facebook we need a custom connector. 
+# Hackathon PlasticPlug
+Some Backgound: This is a interface that was developed during a Microsoft hackathon. We wanted to clean up rivers from plastic. A machanical conveyor belt will pick up plastic from the river. A AI model will count them. Goal of this repo is to post the results to social media in an automatic fashion. 
 
+This is a logic app workflow in Azure. In this workflow I use the built in Twitter and Teams function to post a text. For facebook we need a custom connector. 
 
 # File content
 
