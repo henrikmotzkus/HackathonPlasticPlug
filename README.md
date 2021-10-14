@@ -36,3 +36,7 @@ This is alpha status
 
 
 ![Screenshot](screenshot1.jpg)
+
+
+## Restrictions
+ At the moment TikTok provides no public API to post content. 

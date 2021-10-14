@@ -80,6 +80,28 @@
                     ]
                 },
                 "type": "ApiConnection"
+            },
+            "Send_an_email_(V2)": {
+                "inputs": {
+                    "body": {
+                        "Body": "<p>@{body('Parse_JSON')?['text']}</p>",
+                        "Subject": "Twet this",
+                        "To": "henrik@motzkus.info"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['office365']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/v2/Mail"
+                },
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
             }
         },
         "contentVersion": "1.0.0.0",
@@ -113,6 +135,11 @@
                     "connectionId": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/resourceGroups/hackathon/providers/Microsoft.Web/connections/facebook-2",
                     "connectionName": "facebook-2",
                     "id": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/resourceGroups/hackathon/providers/Microsoft.Web/customApis/facebook"
+                },
+                "office365": {
+                    "connectionId": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/resourceGroups/hackathon/providers/Microsoft.Web/connections/office365",
+                    "connectionName": "office365",
+                    "id": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/providers/Microsoft.Web/locations/westeurope/managedApis/office365"
                 },
                 "teams": {
                     "connectionId": "/subscriptions/2abc2ec1-2238-430d-bf52-40cb7dc8b652/resourceGroups/hackathon/providers/Microsoft.Web/connections/teams",
