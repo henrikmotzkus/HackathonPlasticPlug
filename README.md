@@ -1,15 +1,12 @@
 # HackathonPlasticPlug
-In this worklflow I use the built in Twitter and Team function to post a text. For facebook we need a custom connector. 
+In this worklflow I use the built in Twitter and Teams function to post a text. For facebook we need a custom connector. 
 
 
 # File content
 
 ## PostonSocial.logicapp.json
 
-This is the workflow of the logic app.
-
-
-
+This is the workflow definition of the logic app.
 
 ## apiDefinition.swagger.json
 
@@ -24,8 +21,18 @@ Source: https://github.com/microsoft/PowerPlatformConnectors/tree/master/custom-
 
 
 ## Status
-This is aplha status
+This is alpha status
 
 ## Workflow in detail
+
+1. Http request with JSON payload in body. 
+. 
+{
+    "text": ""
+}
+
+2. JSON will be parsed and converted to a string
+3. In parallel the text will be posted on Twitter, LinkedIn, Teams, Facebook (todo)
+
 
 ![Screenshot](screenshot1.jpg)
